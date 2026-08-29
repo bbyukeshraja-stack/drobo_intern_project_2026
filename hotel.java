@@ -6,10 +6,12 @@ class HotelBooking {
 
     String[] customerName = new String[10];
     String[] checkInDate = new String[10];
-    int[] days = new int[10];
-    boolean[] booked = new boolean[10];
+    String[] roomType = new String[10];
 
-    double roomPrice = 2000;
+    int[] days = new int[10];
+    double[] roomPrice = new double[10];
+
+    boolean[] booked = new boolean[10];
 
     void viewRooms() {
 
@@ -18,7 +20,7 @@ class HotelBooking {
         for (int i = 0; i < 10; i++) {
 
             if (booked[i]) {
-                System.out.println("Room " + (i + 1) + " - Booked");
+                System.out.println("Room " + (i + 1) + " - Booked - " + roomType[i]);
             } else {
                 System.out.println("Room " + (i + 1) + " - Available");
             }
@@ -43,6 +45,43 @@ class HotelBooking {
             return;
         }
 
+        System.out.println("\n ROOM TYPES");
+        System.out.println("1. Standard Room - Rs.2000/day");
+        System.out.println("2. Deluxe Room   - Rs.3000/day");
+        System.out.println("3. Suite Room    - Rs.4000/day");
+        System.out.println("4. Villa         - Rs.5000/day");
+
+        System.out.print("Choose room type: ");
+        int type = sc.nextInt();
+        sc.nextLine();
+
+        switch (type) {
+
+            case 1:
+                roomType[room - 1] = "Standard Room";
+                roomPrice[room - 1] = 2000;
+                break;
+
+            case 2:
+                roomType[room - 1] = "Deluxe Room";
+                roomPrice[room - 1] = 3000;
+                break;
+
+            case 3:
+                roomType[room - 1] = "Suite Room";
+                roomPrice[room - 1] = 4000;
+                break;
+
+            case 4:
+                roomType[room - 1] = "Villa";
+                roomPrice[room - 1] = 5000;
+                break;
+
+            default:
+                System.out.println("Invalid room type!");
+                return;
+        }
+
         System.out.print("Enter customer name: ");
         customerName[room - 1] = sc.nextLine();
 
@@ -55,6 +94,8 @@ class HotelBooking {
         booked[room - 1] = true;
 
         System.out.println("\nRoom booked successfully!");
+        System.out.println("Room Type : " + roomType[room - 1]);
+        System.out.println("Price     : Rs." + roomPrice[room - 1] + " per day");
     }
 
     void checkOut() {
@@ -71,10 +112,10 @@ class HotelBooking {
             System.out.println("Room is not booked!");
             return;
         }
-
-        double total = roomPrice * days[room - 1];
+        double total = roomPrice[room - 1] * days[room - 1];
 
         double discount = 0;
+
         if (days[room - 1] >= 5) {
             discount = total * 0.10;
         }
@@ -84,8 +125,10 @@ class HotelBooking {
         System.out.println("\n HOTEL BILL");
         System.out.println("Customer      : " + customerName[room - 1]);
         System.out.println("Room Number   : " + room);
+        System.out.println("Room Type     : " + roomType[room - 1]);
         System.out.println("Check-in Date : " + checkInDate[room - 1]);
         System.out.println("Days Stayed   : " + days[room - 1]);
+        System.out.println("Price/Day     : Rs." + roomPrice[room - 1]);
         System.out.println("Total Amount  : Rs." + total);
         System.out.println("Discount      : Rs." + discount);
         System.out.println("Final Amount  : Rs." + finalAmount);
@@ -93,6 +136,8 @@ class HotelBooking {
         booked[room - 1] = false;
         customerName[room - 1] = null;
         checkInDate[room - 1] = null;
+        roomType[room - 1] = null;
+        roomPrice[room - 1] = 0;
         days[room - 1] = 0;
 
         System.out.println("\nCheckout successful!");
